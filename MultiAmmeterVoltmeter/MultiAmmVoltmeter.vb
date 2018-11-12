@@ -1,9 +1,9 @@
-﻿Public Class MultiAmmeterVoltmeter
+﻿Public Class MultiAmmVoltmeter
 
     Const Pi As Double = Math.PI
     Dim x1, y1, x2, y2 As Integer
     Dim xp1, yp1, xp2, yp2 As Int32
-    Private m_value As Integer
+    Private m_value As Decimal
     Private m_minimum As Integer
     Private m_maximum As Integer
     Private m_Units As String = "V"
@@ -38,11 +38,11 @@
         End Set
     End Property
 
-    Public Property value As Integer
+    Public Property value As Decimal
         Get
             value = m_value
         End Get
-        Set(value As Integer)
+        Set(value As Decimal)
             If value >= minimum And value <= maximum Then
                 m_value = value
                 Me.Refresh()

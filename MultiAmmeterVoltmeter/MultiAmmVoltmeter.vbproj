@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5D414950-64FE-43DB-8ADA-F4458BD15A23}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MultiAmmeterVoltmeter</RootNamespace>
-    <AssemblyName>MultiAmmeterVoltmeter</AssemblyName>
+    <RootNamespace>MultiAmmVoltmeter</RootNamespace>
+    <AssemblyName>MultiAmmVoltmeter</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>MultiAmmeterVoltmeter.xml</DocumentationFile>
+    <DocumentationFile>MultiAmmVoltmeter.xml</DocumentationFile>
     <DefineConstants>_MYFORMS=True</DefineConstants>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -29,7 +29,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>MultiAmmeterVoltmeter.xml</DocumentationFile>
+    <DocumentationFile>MultiAmmVoltmeter.xml</DocumentationFile>
     <DefineConstants>_MYFORMS=True</DefineConstants>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -74,11 +74,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
-    <Compile Include="MultiAmmeterVoltmeter.vb">
+    <Compile Include="MultiAmmVoltmeter.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MultiAmmeterVoltmeter.Designer.vb">
-      <DependentUpon>MultiAmmeterVoltmeter.vb</DependentUpon>
+    <Compile Include="MultiAmmVoltmeter.Designer.vb">
+      <DependentUpon>MultiAmmVoltmeter.vb</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
@@ -99,8 +99,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MultiAmmeterVoltmeter.resx">
-      <DependentUpon>MultiAmmeterVoltmeter.vb</DependentUpon>
+    <EmbeddedResource Include="MultiAmmVoltmeter.resx">
+      <DependentUpon>MultiAmmVoltmeter.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("MultiAmmeterVoltmeter")>
+<Assembly: AssemblyTitle("MultiAmmVoltmeter")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("MultiAmmeterVoltmeter")>
+<Assembly: AssemblyProduct("MultiAmmVoltmeter")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 
