@@ -1,4 +1,4 @@
-﻿Public Class MultiAmmVoltmeter
+﻿Public Class MultiAmmeterVoltmeter
 
     Const Pi As Double = Math.PI
     Dim x1, y1, x2, y2 As Integer
@@ -27,6 +27,10 @@
             ElseIf units = "A" Then
                 lblUnits.Text = "Ampere"
                 m_Units = units
+            ElseIf units = "H" Then
+                lblUnits.Text = "Hertz"
+                m_Units = units
+
             Else
                 Exit Property
             End If
@@ -48,54 +52,20 @@
         End Set
     End Property
     Public Property minimum As Integer
-            Get
-                minimum = m_minimum
-            End Get
-            Set(minimum As Integer)
-                If minimum > maximum Then
-                    MsgBox("Min can't be greater than Max")
-                    Exit Property
-                End If
-                m_minimum = minimum
-                If value < minimum Then
-                    value = minimum
-                End If
-                For Each lbl In Me.Controls
-                    Select Case lbl.tag
-                        Case "lbl0"
-                            lbl.text = minimum
-                        Case "lbl2"
-                            lbl.text = (maximum - minimum) / 10 * (2.ToString.PadLeft(2, "0")) + minimum
-                        Case "lbl4"
-                            lbl.text = (maximum - minimum) / 10 * (4.ToString.PadLeft(2, "0")) + minimum
-                        Case "lbl6"
-                            lbl.text = (maximum - minimum) / 10 * (6.ToString.PadLeft(2, "0")) + minimum
-                        Case "lbl8"
-                            lbl.text = (maximum - minimum) / 10 * (8.ToString.PadLeft(2, "0")) + minimum
-                        Case "lbl10"
-                            lbl.text = (maximum - minimum) / 10 * (10.ToString.PadLeft(2, "0")) + minimum
-                    End Select
-                Next
-                Dim c = value
-                value = c
-                Me.Refresh()
-            End Set
-        End Property
-        Public Property maximum As Integer
-            Get
-                maximum = m_maximum
-            End Get
-            Set(maximum As Integer)
-                If maximum < minimum Then
-                    MsgBox("Max can't be smaller than Min")
-                    Exit Property
-                End If
-                m_maximum = maximum
-                If value > maximum Then
-                    value = maximum
-                End If
-                For Each lbl In Me.Controls
-                    Select Case lbl.tag
+        Get
+            minimum = m_minimum
+        End Get
+        Set(minimum As Integer)
+            If minimum > maximum Then
+                MsgBox("Min can't be greater than Max")
+                Exit Property
+            End If
+            m_minimum = minimum
+            If value < minimum Then
+                value = minimum
+            End If
+            For Each lbl In Me.Controls
+                Select Case lbl.tag
                     Case "lbl0"
                         lbl.text = minimum
                     Case "lbl2"
@@ -116,13 +86,54 @@
                         lbl.text = (maximum - minimum) / 16 * (16.ToString.PadLeft(2, "0")) + minimum
 
                 End Select
-                Next
-                Dim c = value
-                value = c
-                Me.Refresh()
-            End Set
-        End Property
-        Private Sub GaugePaint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+            Next
+            Dim c = value
+            value = c
+            Me.Refresh()
+        End Set
+    End Property
+    Public Property maximum As Integer
+        Get
+            maximum = m_maximum
+        End Get
+        Set(maximum As Integer)
+            If maximum < minimum Then
+                MsgBox("Max can't be smaller than Min")
+                Exit Property
+            End If
+            m_maximum = maximum
+            If value > maximum Then
+                value = maximum
+            End If
+            For Each lbl In Me.Controls
+                Select Case lbl.tag
+                    Case "lbl0"
+                        lbl.text = minimum
+                    Case "lbl2"
+                        lbl.text = (maximum - minimum) / 16 * (2.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl4"
+                        lbl.text = (maximum - minimum) / 16 * (4.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl6"
+                        lbl.text = (maximum - minimum) / 16 * (6.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl8"
+                        lbl.text = (maximum - minimum) / 16 * (8.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl10"
+                        lbl.text = (maximum - minimum) / 16 * (10.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl12"
+                        lbl.text = (maximum - minimum) / 16 * (12.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl14"
+                        lbl.text = (maximum - minimum) / 16 * (14.ToString.PadLeft(2, "0")) + minimum
+                    Case "lbl16"
+                        lbl.text = (maximum - minimum) / 16 * (16.ToString.PadLeft(2, "0")) + minimum
+
+                End Select
+            Next
+            Dim c = value
+            value = c
+            Me.Refresh()
+        End Set
+    End Property
+    Private Sub GaugePaint(sender As Object, e As PaintEventArgs) Handles Me.Paint
 
         e.Graphics.DrawRectangle(lpen, 1, 1, 148, 148)
 
@@ -144,34 +155,34 @@
         Next
 
         e.Graphics.DrawArc(bpen, centreX - 15, centreY - 15, 30, 30, 180, 90)
-        e.Graphics.DrawLine(bpen, centreX, centreY, centreX - 15, centreY)
-        e.Graphics.DrawLine(bpen, centreX, centreY, centreX, centreY - 15)
+        e.Graphics.DrawLine(bpen, centreX, centreY + 1, centreX - 15, centreY + 1)
+        e.Graphics.DrawLine(bpen, centreX + 1, centreY, centreX + 1, centreY - 15)
 
 
         redrawLine(e)
 
-        End Sub
-        Private Sub addlabel(ByVal i As Integer)
-            Dim lblScale As New Label
-            With lblScale
+    End Sub
+    Private Sub addlabel(ByVal i As Integer)
+        Dim lblScale As New Label
+        With lblScale
             .Location = New Point(x2 - 4, y2 - 4)
             .Size = New Size(18, 10)
             .Text = (maximum - minimum) / 16 * (i.ToString.PadLeft(2, "0"))
             .Font = New Font("Segoe UI", 5, FontStyle.Regular)
-                .ForeColor = Color.Black
-                .BackColor = Color.Transparent
-                .TextAlign = ContentAlignment.TopLeft
-                .Tag = "lbl" & i.ToString
-            End With
-            For Each lbl In Me.Controls
-                If TypeOf (lbl) Is Label And lbl.tag = "lbl" & i.ToString Then
-                    Exit Sub
-                End If
-            Next
-            If i Mod 2 = 0 Then
-                Me.Controls.Add(lblScale)
+            .ForeColor = Color.Black
+            .BackColor = Color.Transparent
+            .TextAlign = ContentAlignment.TopLeft
+            .Tag = "lbl" & i.ToString
+        End With
+        For Each lbl In Me.Controls
+            If TypeOf (lbl) Is Label And lbl.tag = "lbl" & i.ToString Then
+                Exit Sub
             End If
-        End Sub
+        Next
+        If i Mod 2 = 0 Then
+            Me.Controls.Add(lblScale)
+        End If
+    End Sub
     Sub New()
 
         ' La chiamata è richiesta dalla finestra di progettazione.
@@ -198,4 +209,4 @@
     End Sub
 
 
-    End Class
+End Class
