@@ -48,8 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MultiAmmVoltmeter">
-      <HintPath>..\MultiAmmeterVoltmeter\bin\Release\MultiAmmVoltmeter.dll</HintPath>
+    <Reference Include="MultiAmmVoltmeter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\MultiAmmeterVoltmeter\bin\Debug\MultiAmmVoltmeter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -2,10 +2,10 @@
 
     Const Pi As Double = Math.PI
     Dim x1, y1, x2, y2 As Integer
-    Dim xp1, yp1, xp2, yp2 As Int32
-    Private m_value As Decimal
-    Private m_minimum As Integer
-    Private m_maximum As Integer
+    Dim xp1, yp1, xp2, yp2 As Integer
+    Private m_value As Single = 0
+    Private m_minimum As Single = Single.MinValue
+    Private m_maximum As Single = Single.MaxValue
     Private m_Units As String = "V"
     Dim centreX As Integer = 125
     Dim centreY As Integer = 125
@@ -15,10 +15,11 @@
     Dim lpen As New Pen(Color.Black, 2)
     Dim rpen As New Pen(Color.Black, 4)
     Dim tpen As New Pen(Color.Transparent, 2)
+    Private changedMax, changedMin As Boolean
     Dim radius As Double = 120
     Public Property units As String
         Get
-            units = m_Units
+            Return m_Units
         End Get
         Set(units As String)
             If units = "V" Then
@@ -38,12 +39,12 @@
         End Set
     End Property
 
-    Public Property value As Decimal
+    Public Property value As Single
         Get
-            value = m_value
+            Return m_value
         End Get
-        Set(value As Decimal)
-            If value >= minimum And value <= maximum Then
+        Set(value As Single)
+            If value >= m_minimum And value <= m_maximum Then
                 m_value = value
                 Me.Refresh()
             Else
@@ -51,85 +52,39 @@
             End If
         End Set
     End Property
-    Public Property minimum As Integer
+    Public Property minimum As Single
         Get
-            minimum = m_minimum
+            Return m_minimum
         End Get
-        Set(minimum As Integer)
-            If minimum > maximum Then
+        Set(minimum As Single)
+            If minimum > m_maximum Then
                 MsgBox("Min can't be greater than Max")
                 Exit Property
             End If
             m_minimum = minimum
-            If value < minimum Then
+            If m_value < minimum Then
                 value = minimum
             End If
-            For Each lbl In Me.Controls
-                Select Case lbl.tag
-                    Case "lbl0"
-                        lbl.text = minimum
-                    Case "lbl2"
-                        lbl.text = (maximum - minimum) / 16 * (2.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl4"
-                        lbl.text = (maximum - minimum) / 16 * (4.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl6"
-                        lbl.text = (maximum - minimum) / 16 * (6.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl8"
-                        lbl.text = (maximum - minimum) / 16 * (8.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl10"
-                        lbl.text = (maximum - minimum) / 16 * (10.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl12"
-                        lbl.text = (maximum - minimum) / 16 * (12.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl14"
-                        lbl.text = (maximum - minimum) / 16 * (14.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl16"
-                        lbl.text = (maximum - minimum) / 16 * (16.ToString.PadLeft(2, "0")) + minimum
+            changedMin = True
 
-                End Select
-            Next
-            Dim c = value
-            value = c
             Me.Refresh()
         End Set
     End Property
-    Public Property maximum As Integer
+    Public Property maximum As Single
         Get
-            maximum = m_maximum
+            Return m_maximum
         End Get
-        Set(maximum As Integer)
-            If maximum < minimum Then
+        Set(maximum As Single)
+            If maximum < m_minimum Then
                 MsgBox("Max can't be smaller than Min")
                 Exit Property
             End If
             m_maximum = maximum
-            If value > maximum Then
+            If m_value > m_maximum Then
                 value = maximum
             End If
-            For Each lbl In Me.Controls
-                Select Case lbl.tag
-                    Case "lbl0"
-                        lbl.text = minimum
-                    Case "lbl2"
-                        lbl.text = (maximum - minimum) / 16 * (2.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl4"
-                        lbl.text = (maximum - minimum) / 16 * (4.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl6"
-                        lbl.text = (maximum - minimum) / 16 * (6.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl8"
-                        lbl.text = (maximum - minimum) / 16 * (8.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl10"
-                        lbl.text = (maximum - minimum) / 16 * (10.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl12"
-                        lbl.text = (maximum - minimum) / 16 * (12.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl14"
-                        lbl.text = (maximum - minimum) / 16 * (14.ToString.PadLeft(2, "0")) + minimum
-                    Case "lbl16"
-                        lbl.text = (maximum - minimum) / 16 * (16.ToString.PadLeft(2, "0")) + minimum
+            changedMax = True
 
-                End Select
-            Next
-            Dim c = value
-            value = c
             Me.Refresh()
         End Set
     End Property
@@ -160,6 +115,35 @@
 
 
         redrawLine(e)
+
+        If changedMax Or changedMin Then
+            For Each lbl In Me.Controls
+                Select Case lbl.tag
+                    Case "lbl0"
+                        lbl.text = m_minimum
+                    Case "lbl2"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (2.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl4"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (4.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl6"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (6.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl8"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (8.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl10"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (10.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl12"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (12.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl14"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (14.ToString.PadLeft(2, "0")) + m_minimum
+                    Case "lbl16"
+                        lbl.text = (m_maximum - m_minimum) / 16 * (16.ToString.PadLeft(2, "0")) + m_minimum
+
+                End Select
+            Next
+        End If
+        changedMax = False
+        changedMin = False
+
 
     End Sub
     Private Sub addlabel(ByVal i As Integer)
@@ -196,9 +180,12 @@
 
     End Sub
     Public Sub redrawLine(e As PaintEventArgs)
-        If maximum = minimum Then Exit Sub
-        Dim Lend As Double = -Pi / 2 * ((maximum - value) / (maximum - minimum)) - Pi / 2
 
+        Dim Lend As Double
+
+        If maximum > minimum Then
+            Lend = -Pi / 2 * ((maximum - value) / (maximum - minimum)) - Pi / 2
+        End If
 
         xp1 = Convert.ToInt32(90 * Math.Cos(Lend) + centreX)
         yp1 = Convert.ToInt32(90 * Math.Sin(Lend) + centreY)
@@ -206,6 +193,7 @@
         yp2 = Convert.ToInt32(15 * Math.Sin(Lend) + centreY)
 
         e.Graphics.DrawLine(rpen, xp1, yp1, xp2, yp2)
+
 
     End Sub
 
