@@ -196,6 +196,7 @@
 
     End Sub
     Public Sub redrawLine(e As PaintEventArgs)
+        If maximum = minimum Then Exit Sub
         Dim Lend As Double = -Pi / 2 * ((maximum - value) / (maximum - minimum)) - Pi / 2
 
 
